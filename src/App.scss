@@ -1,0 +1,40 @@
+.app {
+  text-align: center;
+  background-color: #ffffff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(12px + 2vmin);
+  color: #3D4290;
+
+  @media (min-width: 769px) {
+    justify-content: flex-start;
+  }
+}
+
+.app-header {
+  height: 10%;
+  position: absolute;
+  border-radius: 20px;
+  width: 50%;
+  margin-top: 10px;
+  color: #ffffff;
+  background-color: #3D4290;
+}
+
+.steps-container {
+  width: 100%;
+  height: 100%;
+  display: inherit;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.box {
+  background-color: #3D4290;
+  color: #ffffff;
+  height: 50px;
+  width: 200px;
+}
