@@ -81,9 +81,23 @@ export async function put<T>(
   return await http<T>(new Request(path, args));
 }
 
+export async function remove(
+  path: string,
+  args: RequestInit = {
+    method: "delete",
+    headers: { 
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  }
+): Promise<number> {
+  return await http<number>(new Request(path, args));
+}
+
 export default {
   get,
   post,
   fullPost,
   put,
+  remove
 };

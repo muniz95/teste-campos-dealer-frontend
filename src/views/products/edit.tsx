@@ -1,15 +1,15 @@
 import React from "react";
-import service from "../../services/customer.service"
+import service from "../../services/product.service"
 import { useParams } from "react-router-dom";
 
 const EditCustomer = () => {
   const { id } = useParams();
   const [name, setName] = React.useState<string | undefined>("");
-  const [city, setCity] = React.useState<string | undefined>("");
+  const [price, setPrice] = React.useState<number | undefined>(0.0);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await service.putCustomer({ idCliente: parseInt(id!), nmCliente: name, cidade: city });
+      await service.putProduct({ idProduto: parseInt(id!), dscProduto: name, vlrUnitario: price });
       alert("Cliente incluído com sucesso.");
     } catch (error) {
       console.error(error);
@@ -18,9 +18,9 @@ const EditCustomer = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const customer = await service.getCustomer(parseInt(id!))
-      setName(customer.nmCliente);
-      setCity(customer.cidade);
+      const customer = await service.getProduct(parseInt(id!))
+      setName(customer.dscProduto);
+      setPrice(customer.vlrUnitario);
     }
 
     fetchData().catch(console.error)
@@ -29,14 +29,14 @@ const EditCustomer = () => {
   return <div>
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="name">Nome</label>
-        <input type="text" name="name" id="name" value={name}
+        <label htmlFor="description">Descrição</label>
+        <input type="text" name="description" id="description" value={name}
           onChange={({target}) => setName(target.value)} />
       </div>
       <div>
-        <label htmlFor="city">Cidade</label>
-        <input type="city" name="city" id="city" value={city}
-          onChange={({target}) => setCity(target.value)}
+        <label htmlFor="price">Valor unitário</label>
+        <input type="number" step="0.01" name="price" id="price" value={price}
+          onChange={({target}) => setPrice(parseFloat(target.value))}
         />
       </div>
       <div>

@@ -1,17 +1,17 @@
 import React from "react";
-import service from "../../services/customer.service"
-import Customer from "../../models/Customer";
+import service from "../../services/product.service"
+import Product from "../../models/Product";
 import S from "./styled"
 import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { confirmAlert } from 'react-confirm-alert';
+import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import Popup from "../../components/Popup";
 import { Button } from "@mui/material";
 
-const Customers = () => {
-  const [customers, setCustomers] = React.useState<Customer[]>([]);
+const Products = () => {
+  const [products, setProducts] = React.useState<Product[]>([]);
   const [total, setTotal] = React.useState<number>(0);
   const navigate = useNavigate();
 
@@ -20,6 +20,7 @@ const Customers = () => {
   }
 
   const handleDeleteClick = async (id: number) => {
+    // toast("Tem certeza que deseja excluir esse registro?");
     confirmAlert({
       customUI: ({ onClose }) => <Popup 
         message="Deseja realmente remover este registro?" 
@@ -28,12 +29,12 @@ const Customers = () => {
         onClose={onClose}
         onConfirm={async () => {
           try {
-            const response = await service.deleteCustomer(id);
+            const response = await service.deleteProduct(id);
             if (response === 200) {
               alert("Cliente removido com sucesso.");
               onClose();
-              setTotal(customers.length - 1);
-              setCustomers(customers.filter(x => x.id != id));
+              setTotal(products.length - 1);
+              setProducts(products.filter(x => x.id != id));
             }
           }
           catch(error) {
@@ -44,8 +45,8 @@ const Customers = () => {
   }
 
   React.useEffect(() => {
-    service.getCustomers().then(response => {
-      setCustomers(response);
+    service.getProducts().then(response => {
+      setProducts(response);
       setTotal(response.length);
     });
   }, []);
@@ -53,21 +54,21 @@ const Customers = () => {
   return <React.Fragment>
     <strong>Total: {total}</strong>
     <S.ItemCardContainer>
-      { customers.map((customer: Customer) =>
-        <S.ItemCard key={customer.id}>
+      { products.map((product: Product) =>
+        <S.ItemCard key={product.id}>
           <S.ItemCardBody>
-            <strong>{customer.name}</strong>
-            <h6>{customer.city}</h6>
+            <strong>{product.name}</strong>
+            <h6>{product.city}</h6>
           </S.ItemCardBody>
           <S.ItemCardActions>
-            <FontAwesomeIcon icon={faPencil} onClick={() => handleEditClick(customer.id!)} />
-            <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteClick(customer.id!)} />
+            <FontAwesomeIcon icon={faPencil} onClick={() => handleEditClick(product.id!)} />
+            <FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteClick(product.id!)} />
           </S.ItemCardActions>
         </S.ItemCard>,
       ) }
     </S.ItemCardContainer>
-    <Button variant="contained" onClick={() => navigate("/clientes/novo")}>Novo</Button>
+    <Button variant="contained" onClick={() => navigate("/produtos/novo")}>Novo</Button>
   </React.Fragment>
 }
 
-export default Customers
+export default Products

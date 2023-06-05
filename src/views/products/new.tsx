@@ -1,12 +1,12 @@
 import React from "react";
-import service from "../../services/customer.service"
+import service from "../../services/product.service"
 
 const NewCustomer = () => {
   const [name, setName] = React.useState("");
-  const [city, setCity] = React.useState("");
+  const [price, setPrice] = React.useState(0.0);
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const result = await service.postCustomer({ nmCliente: name, cidade: city });
+    const result = await service.postProduct({ dscProduto: name, vlrUnitario: price });
     if (result.id) {
       alert("Cliente incluído com sucesso.");
     }
@@ -15,14 +15,14 @@ const NewCustomer = () => {
   return <div>
     <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Nome</label>
-          <input type="text" name="name" id="name"
+          <label htmlFor="description">Descrição</label>
+          <input type="text" name="description" id="description"
             onChange={({target}) => setName(target.value)} />
         </div>
         <div>
-          <label htmlFor="city">Cidade</label>
-          <input type="city" name="city" id="city"
-            onChange={({target}) => setCity(target.value)}
+          <label htmlFor="price">Valor unitário</label>
+          <input type="number" step="0.01" name="price" id="price"
+            onChange={({target}) => setPrice(parseFloat(target.value))}
           />
         </div>
         <div>

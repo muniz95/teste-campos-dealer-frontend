@@ -10,7 +10,7 @@ export const getCustomers = async () => {
 }
 
 export const getCustomer = async (id: number) => {
-  return (await http.get<Customer>(`${url}/Clientes/${id}`));
+  return (await http.get<ExtCustomer>(`${url}/Clientes/${id}`));
 }
 
 export const postCustomer = async (item: ExtCustomer) => {
@@ -18,7 +18,15 @@ export const postCustomer = async (item: ExtCustomer) => {
 }
 
 export const putCustomer = async (item: ExtCustomer) => {
-  return await http.put<Customer>(`${url}/Clientes`, item);
+  return await http.put(`${url}/Clientes/${item.idCliente}`, item);
+}
+
+export const deleteCustomer = async (id: number) => {
+  try {
+    return await http.remove(`${url}/Clientes/${id}`);
+  } catch (error) {
+    throw error
+  }
 }
 
 export default {
@@ -26,4 +34,5 @@ export default {
   getCustomer,
   postCustomer,
   putCustomer,
+  deleteCustomer
 };

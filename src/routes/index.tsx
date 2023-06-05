@@ -5,6 +5,10 @@ import Home from "../views/Home";
 import Customers from "../views/customers";
 import NewCustomer from "../views/customers/new";
 import EditCustomer from "../views/customers/edit";
+import Products from "../views/products";
+import NewProduct from "../views/products/new";
+import EditProduct from "../views/products/edit";
+import Navbar from "../components/Navbar";
 
 const Routes = () => {
   const router = createBrowserRouter([
@@ -12,6 +16,9 @@ const Routes = () => {
     { path: "/clientes", element: <Customers />},
     { path: "/clientes/novo", element: <NewCustomer />},
     { path: "/clientes/:id", element: <EditCustomer />},
+    { path: "/produtos", element: <Products />},
+    { path: "/produtos/novo", element: <NewProduct />},
+    { path: "/produtos/:id", element: <EditProduct />},
   ]);
   return (
     <div className="app">
@@ -19,19 +26,7 @@ const Routes = () => {
       <div className="steps-container">
         <RouterProvider router={router} />
       </div>
-      <nav>
-        <ul>
-          <li>
-            <a href={`/clientes`}>Clientes</a>
-          </li>
-          <li>
-            <a href={`/produtos`}>Produtos</a>
-          </li>
-          <li>
-            <a href={`/vendas`}>Vendas</a>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
     </div>
   );
 }
